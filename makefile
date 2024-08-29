@@ -1,22 +1,16 @@
-WARNING = -Wall -Wshadow --pedantic
-ERROR = -Wvla -Werror
-GCC = gcc -std=c99 -g $(WARNING) $(ERROR) 
+CC = gcc
+CFLAGS = -Wall -Wextra -std=c11
+LDFLAGS = 
+TARGET = a1
+SRC = a1.c
 
-TESTFALGS = -DTEST_READLIST -DTEST_CALCULATE -DTEST_ADDNODE
+$(TARGET) : $(SRC)
+	$(CC) $(CFLAGS) $(SRC) -o $(TARGET) $(LDFLAGS) 
 
-SRCS = main.c 
-OBJS = $(SRCS:%.c=%.o)
-
-a1: $(OBJS) 
-	$(GCC) $(TESTFALGS) $(OBJS) -o a1
-
-.c.o: 
-	$(GCC) $(TESTFALGS) -c $*.c 
-
-testall: test1 
-
-
-test1: a1 ./a1 
+run: a1 
+	./a1 
 
 clean: 
-	rm -f a1 *.o output? *~
+	rm -f $(TARGET)
+
+.PHONY: all clean
